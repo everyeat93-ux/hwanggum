@@ -345,24 +345,67 @@ document.addEventListener('keydown', (e) => {
 
 function handleReservationSubmit(event) {
   event.preventDefault();
-  const name = document.getElementById('userName').value;
-  const phone = document.getElementById('userPhone').value;
+  const name = document.getElementById('userName').value.trim();
+  const phone = document.getElementById('userPhone').value.trim();
   const date = document.getElementById('bookDate').value;
   const time = document.getElementById('bookTime').value;
+  const category = document.getElementById('interestedCat').value;
+  const memo = document.getElementById('userMemo').value.trim();
 
-  showToast(`감사합니다, ${name} 고객님! ${date} ${time} 공장 방문 맞춤 피팅 예약이 접수되었습니다. (0507-1316-9812 안내)`);
+  // Save booking data to localStorage
+  const bookingRecord = {
+    id: 'BK_' + Date.now(),
+    name,
+    phone,
+    date,
+    time,
+    category,
+    memo,
+    createdAt: new Date().toLocaleString('ko-KR')
+  };
+
+  try {
+    const existing = JSON.parse(localStorage.getItem('hwanggum_bookings') || '[]');
+    existing.unshift(bookingRecord);
+    localStorage.setItem('hwanggum_bookings', JSON.stringify(existing));
+  } catch (e) {
+    console.error('Storage error:', e);
+  }
+
+  showToast(`[예약 접수] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 완료되었습니다! 0507-1316-9812로 확인 연락을 드립니다.`);
   document.getElementById('bookingForm').reset();
   setDefaultBookingDates();
 }
 
 function handleModalReservationSubmit(event) {
   event.preventDefault();
-  const name = document.getElementById('mUserName').value;
+  const name = document.getElementById('mUserName').value.trim();
+  const phone = document.getElementById('mUserPhone').value.trim();
   const date = document.getElementById('mBookDate').value;
   const time = document.getElementById('mBookTime').value;
+  const category = document.getElementById('mInterestedCat').value;
+
+  const bookingRecord = {
+    id: 'BK_' + Date.now(),
+    name,
+    phone,
+    date,
+    time,
+    category,
+    memo: '',
+    createdAt: new Date().toLocaleString('ko-KR')
+  };
+
+  try {
+    const existing = JSON.parse(localStorage.getItem('hwanggum_bookings') || '[]');
+    existing.unshift(bookingRecord);
+    localStorage.setItem('hwanggum_bookings', JSON.stringify(existing));
+  } catch (e) {
+    console.error('Storage error:', e);
+  }
 
   closeModal('reservationModal');
-  showToast(`감사합니다, ${name} 고객님! ${date} ${time} 공장 방문 맞춤 피팅 예약이 접수되었습니다.`);
+  showToast(`[예약 접수] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 완료되었습니다!`);
 }
 
 function showToast(message) {
