@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>황금모피 (HWANG GEUM) - 35년 부부 장인의 수제 모피 아틀리에</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="35년 경력의 장인 부부가 짓는 옷. 타협 없는 원피 선별과 손바느질 마감으로 오래도록 대를 이어 입는 수제 모피, 황금모피(HWANG GEUM) 공식 브랜드 사이트입니다.">
+  <meta name="keywords" content="황금모피, HWANG GEUM, Goldfur, 밍크코트, 통밍크자켓, 블랙그라마, 밍크머플러, 모피맞춤, 모피리폼, 동대문모피">
+  <meta property="og:title" content="황금모피 (HWANG GEUM) - Tailor-made, Put the heart.">
+  <meta property="og:description" content="35년 부부 장인이 직접 짓는 수제 모피 아틀리에. 타임리스 룩북 및 쇼룸 맞춤 피팅 예약.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/label-woven-black.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/label-woven-black.png">
+
+  <!-- CSS with Cache Buster -->
+  <link rel="stylesheet" href="css/style.css?v=20260911_v3">
+</head>
+<body>
+
+  <!-- =======================================================================
+       Top Announcement Bar
+       ======================================================================= -->
+  <div class="top-bar">
+    <span>✦ 1990 - 2025 · 35년 부부 장인의 수제 모피 아틀리에</span>
+    <span class="top-bar-divider">|</span>
+    <span>Tailor-made, Put the heart.</span>
+    <span class="top-bar-divider">|</span>
+    <span>공장 직영 방문: 서울 동대문구 천호대로89길 3 진양빌딩 403호 (100% 사전 예약제)</span>
+  </div>
+
+  <!-- =======================================================================
+       Header & Navigation
+       ======================================================================= -->
+  <header class="main-header" id="mainHeader">
+    <div class="container header-inner">
+      <!-- Brand Logo -->
+      <a href="#hero" class="header-brand">
+        <img src="assets/images/logo-hwanggeum.png" alt="황금모피 HWANG GEUM 로고" class="brand-logo-img">
+        <div class="brand-logo-text">
+          <span class="brand-logo-en">HWANG GEUM</span>
+          <span class="brand-logo-sub">since 1990 · atelier</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="header-nav">
+        <a href="#collection" class="nav-link">COLLECTION</a>
+        <a href="#essence" class="nav-link">ESSENCE</a>
+        <a href="#atelier" class="nav-link">ATELIER</a>
+        <a href="#craft" class="nav-link">CRAFT</a>
+        <a href="#factory" class="nav-link">FACTORY (공장 방문)</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer" class="btn-header-store">
+          스마트스토어 ↗
+        </a>
+        <button type="button" class="btn-header-reserve" onclick="openReservationModal()">
+          공장 방문 예약
+        </button>
+        <button type="button" class="btn-mobile-toggle" id="mobileMenuBtn" aria-label="메뉴 열기">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Dropdown Nav -->
+  <div id="mobileDropdown" style="display: none; background: #fff; padding: 20px; border-bottom: 1px solid #E8E2D8; text-align: center;">
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <a href="#collection" class="nav-link" onclick="toggleMobileNav()">COLLECTION</a>
+      <a href="#essence" class="nav-link" onclick="toggleMobileNav()">ESSENCE</a>
+      <a href="#atelier" class="nav-link" onclick="toggleMobileNav()">ATELIER</a>
+      <a href="#craft" class="nav-link" onclick="toggleMobileNav()">CRAFT</a>
+      <a href="#factory" class="nav-link" onclick="toggleMobileNav()">FACTORY (공장 방문)</a>
+      <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" class="btn-header-store" style="justify-content: center;">네이버 스마트스토어 바로가기 ↗</a>
+      <button type="button" class="btn-primary-gold" onclick="toggleMobileNav(); openReservationModal();" style="width: 100%; justify-content: center;">공장 방문 & 1:1 맞춤 상담 예약</button>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       Hero Section (Cinematic Editorial Landing)
+       ======================================================================= -->
+  <section class="hero-section" id="hero">
+    <!-- Slider Backgrounds with High-Fashion Editorial Models -->
+    <div class="hero-bg-slider" id="heroBgSlider">
+      <div class="hero-slide active" style="background-image: url('assets/images/hero-model-white.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('assets/images/hero-model-blackglama.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('assets/images/hero-model-vest.jpg');"></div>
+      <div class="hero-slide" style="background-image: url('assets/images/real-model-shot.png'); background-position: center 15%;"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <!-- Slide Indicators -->
+    <div class="hero-slide-dots" id="heroDots">
+      <div class="hero-dot active" onclick="goToSlide(0)"></div>
+      <div class="hero-dot" onclick="goToSlide(1)"></div>
+      <div class="hero-dot" onclick="goToSlide(2)"></div>
+      <div class="hero-dot" onclick="goToSlide(3)"></div>
+    </div>
+
+    <div class="container">
+      <div class="hero-content">
+        <!-- Trust Badge: Black Woven Label Asset -->
+        <div class="hero-badge-wrap">
+          <img src="assets/images/label-woven-black.png" alt="HWANG GEUM since 1990 직조 라벨" class="hero-label-thumb">
+          <span class="hero-sub-text">Handcrafted Fur Atelier · 35 Years Heritage</span>
+        </div>
+
+        <h1 class="hero-title">
+          Tailor-made,<br>
+          <span class="italic">Put the heart.</span>
+        </h1>
+
+        <p class="hero-desc">
+          <strong>"고객의 체형과 온기에 맞는 모피를 짓습니다."</strong><br>
+          1990년부터 서울 동대문 아틀리에를 지켜온 35년 경력의 부부 장인.<br>
+          타협 없는 원피 선별과 보이지 않는 안감 손바느질 마감으로 대를 이어 물려줄 수 있는 단 하나의 모피를 만듭니다.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#collection" class="btn-primary-gold">
+            컬렉션 룩북 감상 <span>↓</span>
+          </a>
+          <a href="#atelier" class="btn-outline-light">
+            35년 아틀리에 이야기
+          </a>
+        </div>
+
+        <!-- Hero Stats -->
+        <div class="hero-footer-stats">
+          <div class="stat-item">
+            <h4>1990</h4>
+            <p>설립 연도 (35년 공방)</p>
+          </div>
+          <div class="stat-item">
+            <h4>100%</h4>
+            <p>장인 손바느질 정밀 마감</p>
+          </div>
+          <div class="stat-item">
+            <h4>DIRECT</h4>
+            <p>공방 직판 합리적 명품가</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Brand Essence & Dual Perspective
+       ======================================================================= -->
+  <section class="section essence-section" id="essence">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-sub">Brand Essence & Heritage</span>
+        <h2 class="section-title">35년 부부 장인이 지켜온 타협 없는 기본</h2>
+        <p class="section-desc">
+          "털이 잘 빠지지 않고, 재봉선이 만져지지 않으며, 시간이 흘러도 옷의 태가 무너지지 않는 것.<br>
+          황금모피가 35년 동안 한자리에서 고객과의 신뢰를 지켜온 가장 단순하고도 위대한 원칙입니다."
+        </p>
+      </div>
+
+      <!-- Top Banner with Sewing Machine 2 Asset (미싱2) -->
+      <div class="essence-banner">
+        <div class="essence-image-box">
+          <img src="assets/images/craft-sewing-machine-2.png" alt="황금모피 35년 장인의 특수 미싱 작업">
+          <div class="essence-badge-overlay">
+            <img src="assets/images/label-woven-black.png" alt="블랙 직조 라벨">
+            <p><strong>HWANG GEUM Master Sewing</strong><br>35년 장인의 손끝으로 완성하는 무결점 특수 미싱 봉제</p>
+          </div>
+        </div>
+        <div class="essence-text-box">
+          <span class="section-sub">Philosophy</span>
+          <h3>"많이 파는 옷이 아니라,<br>대를 이어 물려줄 수 있는 옷"</h3>
+          <p>
+            기계로 찍어내는 양산형 기성 모피는 겉은 화려할지 몰라도 몇 해만 지나면 가죽이 경화되거나 털이 빠져 옷의 균형이 무너집니다.
+          </p>
+          <div class="quote-highlight">
+            "모피는 단순한 방한복이 아닙니다. 입는 분의 체온과 세월이 배어드는 하나의 예술품이기에, 단 1mm의 재봉선 오차도 허용하지 않습니다."
+          </div>
+          <p>
+            황금모피는 35년간 서울 동대문 작업실에서 원피 선별부터 패턴 재단, 스킨 판장, 특수 미싱, 최종 손바느질 시침까지 부부 장인이 직접 모든 공정을 손으로 통제합니다. 백화점 500~1000만원대 모피의 퀄리티를 중간 유통 거품 없이 100만~200만원대의 합리적인 공방가로 제안하는 이유입니다.
+          </p>
+        </div>
+      </div>
+
+      <!-- Dual Perspective: 제작자의 눈 vs 착용자의 경험 -->
+      <div class="dual-perspective-grid">
+        <!-- Perspective 1 -->
+        <div class="perspective-card">
+          <div class="perspective-header">
+            <div class="perspective-icon">👁️</div>
+            <div>
+              <span>Dual Perspective 01</span>
+              <h4>제작자의 엄격한 시선</h4>
+            </div>
+          </div>
+          <ul class="perspective-list">
+            <li><strong>보이지 않는 안감 손바느질(새들 스티치) 마감</strong>: 겉모습뿐만 아니라 안감 라이닝의 땀수 하나까지 손으로 바느질하여 들뜸 없는 착용감 완성</li>
+            <li><strong>새치 없는 최상급 원피 선별</strong>: 북미 블랙그라마(Blackglama®) 및 북유럽 사가(SAGA) 등 장모와 단모의 밀도가 완벽한 원피만 고집</li>
+            <li><strong>정밀 V자 재단 및 모피 결의 완벽한 대칭</strong>: 좌우 대칭과 털의 흐름(Direction)을 나노 단위로 맞춰 빛의 각도에 따른 고급스러운 광택 구현</li>
+            <li><strong>특수 미싱을 통한 재봉선 은폐</strong>: 털이 씹히지 않도록 특수 도구로 털을 빗어내며 봉제하여 이음새가 손끝에 전혀 걸리지 않음</li>
+          </ul>
+        </div>
+
+        <!-- Perspective 2 -->
+        <div class="perspective-card">
+          <div class="perspective-header">
+            <div class="perspective-icon">✨</div>
+            <div>
+              <span>Dual Perspective 02</span>
+              <h4>착용자의 감동적인 경험</h4>
+            </div>
+          </div>
+          <ul class="perspective-list">
+            <li><strong>깃털처럼 가벼운 착용감</strong>: 숙련된 스킨 판장 기술로 불필요한 가죽 무게를 줄여 어깨 결림 없이 하루 종일 가볍고 포근한 피팅감</li>
+            <li><strong>피부에 닿는 극상의 부드러움</strong>: 최상위 암컷 밍크의 촘촘한 언더퍼(단모)가 목과 턱선을 포근히 감싸 찬바람을 완벽 차단</li>
+            <li><strong>시간이 지나도 무너지지 않는 테일러드 핏</strong>: 한국인 여성의 체형을 35년간 연구하여 카라의 각도와 암홀 라인이 어떤 체형에도 우아하게 밀착</li>
+            <li><strong>평생 안심할 수 있는 아틀리에 케어</strong>: 언제든 동대문 공방에서 직영 수선, 사이즈 조절, 세탁 및 맞춤 리폼 지원</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Curated Collection & Magazine Lookbook (스마트스토어 실물 연동)
+       ======================================================================= -->
+  <section class="section collection-section" id="collection">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-sub">Curated Lookbook & Shop</span>
+        <h2 class="section-title">황금모피 시그니처 컬렉션</h2>
+        <p class="section-desc">
+          35년 장인의 손길로 빚어낸 럭셔리 룩북입니다. 원하시는 상품을 클릭하여 고화질 디테일을 확인하시고,<br>
+          <strong>[스마트스토어로 구매하기]</strong>를 통해 네이버페이 혜택과 실제 구매 고객 리뷰를 확인하실 수 있습니다.
+        </p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="collection-nav-wrap">
+        <button type="button" class="collection-tab active" data-category="all">
+          전체 컬렉션 <span class="collection-count-badge" id="countAll">(0)</span>
+        </button>
+        <button type="button" class="collection-tab" data-category="jacket-coat">
+          Jacket & Coat <span class="collection-count-badge" id="countJacket">(0)</span>
+        </button>
+        <button type="button" class="collection-tab" data-category="vest-hood">
+          Vest & Hood <span class="collection-count-badge" id="countVest">(0)</span>
+        </button>
+        <button type="button" class="collection-tab" data-category="muffler-scarf">
+          Muffler & Scarf <span class="collection-count-badge" id="countMuffler">(0)</span>
+        </button>
+        <button type="button" class="collection-tab" data-category="acc-hat">
+          Acc & Hat <span class="collection-count-badge" id="countAcc">(0)</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Products Grid -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Dynamically injected via JS -->
+      </div>
+
+      <!-- Collection Bottom Bridge -->
+      <div class="collection-bottom-cta">
+        <h4>원하시는 기장이나 특별한 사이즈 맞춤 제작이 필요하신가요?</h4>
+        <p>
+          황금모피는 자체 아틀리에를 운영하므로 고객님의 어깨너비, 팔 길이, 총장 선호도에 따른 1:1 맞춤 제작 및 기존 소장 모피 리폼이 가능합니다.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button type="button" class="btn-primary-gold" onclick="openReservationModal()">
+            쇼룸 맞춤 상담 예약하기
+          </button>
+          <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer" class="btn-outline-light" style="color: #121212; border-color: #121212;">
+            스마트스토어 전체 상품 보기 ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Atelier (Brand Story)
+       ======================================================================= -->
+  <section class="section atelier-section" id="atelier">
+    <div class="container">
+      <div class="atelier-grid">
+        <!-- Story Text -->
+        <div class="atelier-story">
+          <span class="section-sub">Atelier Story Since 1990</span>
+          <h3>
+            차가운 유통 공장이 아닌,<br>
+            <span>시간이 축적된 프라이빗 아틀리에</span>
+          </h3>
+          <p>
+            1990년, 서울 동대문의 작은 작업대 위에서 모피 한 벌을 정성스레 바느질하며 황금모피의 역사가 시작되었습니다.
+            유행을 좇아 값싼 부자재로 대량 생산하는 수많은 공장들이 생겨나고 사라지는 동안,
+            황금모피 부부 장인은 35년간 단 한 번도 ‘손바느질’과 ‘직접 선별’의 원칙을 타협하지 않았습니다.
+          </p>
+          <p>
+            재봉틀 앞에서 원피의 털 한 올 한 올을 빗겨가며 땀수를 놓는 남편 장인과,
+            옷의 보이지 않는 안쪽 라이닝과 시침 마감, 단추 하나의 결까지 손수 마무리하는 아내 장인.
+            두 사람의 손끝에서 탄생하는 모피는 단순한 기성복이 아닌 입는 사람의 품격을 완성하는 단 하나의 작품이 됩니다.
+          </p>
+
+          <div class="story-features">
+            <div class="feature-pill">
+              <h5>35 Years Experience</h5>
+              <p>1990년부터 축적된 대한민국 1세대 모피 장인의 정밀 기술력</p>
+            </div>
+            <div class="feature-pill">
+              <h5>Dongdaemun Atelier</h5>
+              <p>원피 재단부터 완성까지 한 공간에서 이루어지는 올인원 공방</p>
+            </div>
+            <div class="feature-pill">
+              <h5>1:1 Bespoke Tailoring</h5>
+              <p>고객 체형 측정에 맞춘 기장 조절 및 커스텀 맞춤 제작</p>
+            </div>
+            <div class="feature-pill">
+              <h5>Lifetime Care Service</h5>
+              <p>공방 직영 모피 클리닝, 보관 가이드 및 영구 수선 지원</p>
+            </div>
+          </div>
+
+          <button type="button" class="btn-primary-gold" onclick="openReservationModal()">
+            동대문 공장 직영 방문 예약
+          </button>
+        </div>
+
+        <!-- Visual Collage featuring Real Artisan Couple & Workshop -->
+        <div class="atelier-visual-collage">
+          <div class="collage-item full-span">
+            <img src="assets/images/artisan-couple.png" alt="35년간 황금모피를 지켜온 부부 장인" style="object-position: center 25%;">
+            <div class="collage-caption" style="background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%);">
+              <strong>✦ 35년의 시간, 하나의 길</strong> — 서울 동대문 작업실에서 정성을 짓는 황금모피 부부 장인
+            </div>
+          </div>
+          <div class="collage-item">
+            <img src="assets/images/label-lining-detail.png" alt="옷안감 라벨 손바느질 마감">
+            <div class="collage-caption">옷안감 손바느질 라벨 디테일</div>
+          </div>
+          <div class="collage-item">
+            <img src="assets/images/craft-hand-sewing-1.png" alt="손바느질 수봉 마감">
+            <div class="collage-caption">정밀 손바느질 수봉 작업</div>
+          </div>
+          <div class="collage-item full-span">
+            <img src="assets/images/showroom-fur-racks.png" alt="동대문 공장 밍크 컬렉션 완제품 랙">
+            <div class="collage-caption">동대문 공장 완제품 컬렉션 거치 랙</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Craft (7-Step Fur Master Process)
+       ======================================================================= -->
+  <section class="section craft-section" id="craft">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-sub">Craftsmanship & 7-Step Process</span>
+        <h2 class="section-title">타협 없는 7단계 장인 제작 공정</h2>
+        <p class="section-desc">
+          모피 리플렛에 담겼던 황금모피만의 7단계 마스터 프로세스입니다.<br>
+          스텝 버튼을 클릭하여 각 공정별 장인의 숨은 기술력과 철학을 확인해 보세요.
+        </p>
+      </div>
+
+      <!-- Step Navigation Tabs -->
+      <div class="craft-tabs-nav" id="craftTabs">
+        <button type="button" class="craft-step-btn active" data-step="1">
+          <span class="craft-step-num">01</span>
+          <span class="craft-step-name">원피 선별</span>
+        </button>
+        <button type="button" class="craft-step-btn" data-step="2">
+          <span class="craft-step-num">02</span>
+          <span class="craft-step-name">스킨 판장</span>
+        </button>
+        <button type="button" class="craft-step-btn" data-step="3">
+          <span class="craft-step-num">03</span>
+          <span class="craft-step-name">1차 성형</span>
+        </button>
+        <button type="button" class="craft-step-btn" data-step="4">
+          <span class="craft-step-num">04</span>
+          <span class="craft-step-name">특수 미싱</span>
+        </button>
+        <button type="button" class="craft-step-btn" data-step="5">
+          <span class="craft-step-num">05</span>
+          <span class="craft-step-name">2차 성형 & 조립</span>
+        </button>
+        <button type="button" class="craft-step-btn" data-step="6">
+          <span class="craft-step-num">06</span>
+          <span class="craft-step-name">시침 & 완성</span>
+        </button>
+        <button type="button" class="craft-step-btn" data-step="7">
+          <span class="craft-step-num">07</span>
+          <span class="craft-step-name">전수 검수</span>
+        </button>
+      </div>
+
+      <!-- Active Step Detail Display Card -->
+      <div class="craft-step-detail-card" id="craftStepCard">
+        <div class="craft-detail-visual">
+          <img id="craftStepImg" src="assets/images/craft-pelt-selection.jpg" alt="원피 선별">
+        </div>
+        <div class="craft-detail-info">
+          <span class="craft-step-indicator" id="craftStepIndicator">STEP 01 / SELECTION</span>
+          <h3 id="craftStepTitle">선별 (Selection)</h3>
+          <p id="craftStepDesc">
+            35년 노하우를 바탕으로 북미(Blackglama) 및 북유럽(SAGA) 경매에서 엄선한 지속가능하고 윤리적인 최상위 프리미엄 원피만을 선별합니다. 장모의 길이, 단모의 빽빽한 밀도, 색상의 균일성을 손끝의 감각으로 전수 분류합니다.
+          </p>
+          <div class="craft-point-box">
+            <h5 id="craftStepPointTitle">황금모피의 핵심 기술 포인트</h5>
+            <p id="craftStepPointDesc">
+              새치나 모질 불량이 섞이지 않도록 자연광 아래에서 원피 한 장 한 장을 분리하여 동일한 컬러 톤과 밀도를 지닌 원피만을 하나의 옷에 배합합니다.
+            </p>
+          </div>
+          <button type="button" class="btn-outline-light" style="color: #121212; border-color: #121212;" onclick="openReservationModal()">
+            공장에서 공정 원피 직접 만져보기 →
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Technical Pillars -->
+      <div class="craft-3-pillars">
+        <div class="pillar-card">
+          <div class="pillar-icon">🔒</div>
+          <h4>털 빠짐 방지 특수 마감</h4>
+          <p>원피 가죽 내부의 모근을 완벽히 보호하는 숙련된 수평 판장 기술로 착용 시 털 날림을 최소화합니다.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🪡</div>
+          <h4>무결점 재봉선 은폐 기술</h4>
+          <p>특수 모피 전용 봉제기와 털 빗질 테크닉을 결합하여 손으로 만져도 이음새가 전혀 느껴지지 않습니다.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">⚖️</div>
+          <h4>균일한 장모/단모 비율</h4>
+          <p>언더퍼(솜털)의 포근한 보온성과 가드헤어(장모)의 은은한 광택이 완벽한 황금비율을 이루는 최고 등급 원피만 사용합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Factory Visit & Reservation (공장 직영 방문 & 맞춤 피팅)
+       ======================================================================= -->
+  <section class="section showroom-section" id="factory">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-sub">Authentic Factory & Atelier Visit</span>
+        <h2 class="section-title">35년 동대문 공장 직영 방문 & 1:1 맞춤 피팅</h2>
+        <p class="section-desc">
+          황금모피는 화려한 인테리어의 백화점 매장이나 별도의 쇼룸 대신, 부부 장인이 35년간 모피를 짓고 있는 <strong>실제 제조 공장</strong>으로 고객님을 모십니다.<br>
+          백화점 입점 수수료 35~40%와 쇼룸 유지 비용 거품을 완전히 제거한 <strong>정직한 공장 직판가</strong>로 만나보세요. (100% 사전 예약제 운영)
+        </p>
+      </div>
+
+      <div class="showroom-wrap">
+        <!-- Left: Factory Info -->
+        <div class="showroom-info-side">
+          <div>
+            <span class="section-sub">Factory Location & Service</span>
+            <h3>동대문 공장 직영 안내</h3>
+            <p class="intro">
+              황금모피는 별도의 쇼룸이 없으며, 실제 모피가 재단되고 봉제되는 <strong>제조 공장 현장</strong>입니다.
+              안전하고 쾌적한 1:1 상담과 원활한 피팅을 위해 <strong>100% 사전 예약 고객님만</strong> 단독으로 모시고 있습니다.
+            </p>
+
+            <div class="showroom-details-list">
+              <div class="detail-row">
+                <div class="detail-row-icon">🏭</div>
+                <div class="detail-row-content">
+                  <h5>공장 위치</h5>
+                  <p>서울 동대문구 천호대로89길 3 진양빌딩 403호 황금모피 공장</p>
+                  <p style="font-size: 12.5px; color: #888; margin-top: 2px;">(장한평역 및 군자교 인근, 건물 내 방문 주차 가능)</p>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-row-icon">⏰</div>
+                <div class="detail-row-content">
+                  <h5>방문 운영 시간 (사전 예약제)</h5>
+                  <p>월요일 ~ 토요일 : 10:00 - 19:00</p>
+                  <p style="font-size: 12.5px; color: #888; margin-top: 2px;">(미리 예약 시 저녁 시간대 및 일요일 단독 방문 가능)</p>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-row-icon">📞</div>
+                <div class="detail-row-content">
+                  <h5>공식 상담 직통</h5>
+                  <p>전화: <strong>0507-1316-9812</strong></p>
+                  <p>이메일: <strong>goldfur_kr@naver.com</strong></p>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-row-icon">✂️</div>
+                <div class="detail-row-content">
+                  <h5>공장 직영 방문만의 특별한 혜택</h5>
+                  <p>공장에서 완성된 실물 전 제품 직접 피팅, 장인과의 1:1 체형 측정 및 기장/소매 맞춤 조절, 기존 소장 모피 리폼 현장 진단</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Buttons -->
+          <div>
+            <span style="font-size: 12px; color: #888; letter-spacing: 0.05em;">공장 길찾기 바로가기:</span>
+            <div class="showroom-map-links">
+              <a href="https://map.naver.com/v5/search/%EC%84%9C%EC%9A%B8%20%EB%8F%99%EB%8C%80%EB%AC%B8%EA%B5%AC%20%EC%B2%9C%ED%98%B8%EB%8C%80%EB%A1%9C89%EA%B8%B8%203" target="_blank" rel="noopener noreferrer" class="btn-map-app">
+                <span>🟢 네이버 지도 길찾기</span>
+              </a>
+              <a href="https://map.kakao.com/?q=%EC%84%9C%EC%9A%B8%20%EB%8F%99%EB%8C%80%EB%AC%B8%EA%B5%AC%20%EC%B2%9C%ED%98%B8%EB%8C%80%EB%A1%9C89%EA%B8%B8%203" target="_blank" rel="noopener noreferrer" class="btn-map-app">
+                <span>🟡 카카오맵 길찾기</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Reservation Form -->
+        <div class="showroom-form-side">
+          <span class="section-sub">Direct Factory Booking</span>
+          <h4>공장 방문 피팅 & 맞춤 상담 예약</h4>
+          <p class="sub">쇼룸 대신 실제 공장으로 오셔서 원피의 질감을 직접 만져보고 나만의 핏을 찾아보세요.</p>
+
+          <form class="reservation-form" id="bookingForm" onsubmit="handleReservationSubmit(event)">
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="userName">성함 *</label>
+                <input type="text" id="userName" name="userName" placeholder="홍길동" required>
+              </div>
+              <div class="form-group">
+                <label for="userPhone">연락처 *</label>
+                <input type="tel" id="userPhone" name="userPhone" placeholder="010-0000-0000" required>
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="bookDate">방문 희망 일자 *</label>
+                <input type="date" id="bookDate" name="bookDate" required>
+              </div>
+              <div class="form-group">
+                <label for="bookTime">방문 희망 시간 *</label>
+                <select id="bookTime" name="bookTime" required>
+                  <option value="">시간대를 선택해 주세요</option>
+                  <option value="11:00">오전 11:00</option>
+                  <option value="14:00">오후 02:00</option>
+                  <option value="15:30">오후 03:30</option>
+                  <option value="17:00">오후 05:00</option>
+                  <option value="18:30">오후 06:30</option>
+                  <option value="other">기타 시간대 (상담 후 협의)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="interestedCat">관심 품목 / 방문 목적</label>
+              <select id="interestedCat" name="interestedCat">
+                <option value="jacket-coat">통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)</option>
+                <option value="vest-hood">밍크 베스트 & 후드 조끼 라인</option>
+                <option value="muffler">통밍크 머플러 & 스카프 컬렉션</option>
+                <option value="bespoke">체형 1:1 맞춤 제작 (Bespoke)</option>
+                <option value="reform">기존 소장 모피 리폼 / 수선 상담</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="userMemo">추가 요청 사항 (체형 고민, 원하는 컬러, 희망 기장 등)</label>
+              <textarea id="userMemo" name="userMemo" rows="3" placeholder="예: 평소 66사이즈를 입는데 롱코트 기장감과 소매 길이 상담을 희망합니다."></textarea>
+            </div>
+
+            <div class="form-checkbox-wrap">
+              <input type="checkbox" id="agreePrivacy" required checked>
+              <label for="agreePrivacy">
+                공장 방문 예약 및 안내 연락을 위한 개인정보 수집 및 이용에 동의합니다.
+              </label>
+            </div>
+
+            <button type="submit" class="btn-submit-booking">
+              공장 방문 예약 신청하기
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       SmartStore & Official Site Bridge
+       ======================================================================= -->
+  <section class="bridge-section">
+    <div class="container">
+      <div class="bridge-grid">
+        <div class="bridge-box">
+          <div>
+            <span class="section-sub">Official Brand Site</span>
+            <h4>HWANG GEUM 공식 사이트</h4>
+            <p>
+              35년 부부 장인의 헤리티지, 제작 공정의 투명성, 고화질 매거진 룩북 및 제조 공장 직영 방문(사전 예약)을 전담합니다.
+            </p>
+          </div>
+          <div style="font-size: 12px; color: var(--accent-gold); font-weight: 600;">
+            ✦ 브랜드 가치 증명 & 공장 직영 비스포크 상담 창구
+          </div>
+        </div>
+
+        <div class="bridge-box highlight">
+          <div>
+            <span class="section-sub" style="color: var(--accent-gold);">Commerce & Review</span>
+            <h4>네이버 스마트스토어 공식몰</h4>
+            <p>
+              네이버페이 포인트 최대 적립, 안전한 에스크로 결제, 실제 구매 고객님들의 생생한 포토 리뷰를 직접 확인하실 수 있습니다.
+            </p>
+          </div>
+          <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer" class="btn-primary-gold" style="padding: 12px 24px; font-size: 13px; align-self: flex-start;">
+            스마트스토어로 이동하기 ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Footer
+       ======================================================================= -->
+  <footer class="main-footer" id="contact">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Brand Info -->
+        <div class="footer-brand">
+          <h3>HWANG GEUM</h3>
+          <p class="sub">황금모피 · since 1990</p>
+          <p class="desc">
+            "Tailor-made, Put the heart."<br>
+            고객의 온기에 맞는 모피를 짓는 35년 경력 부부 장인의 프리미엄 아틀리에입니다.
+          </p>
+          <img src="assets/images/label-woven-black.png" alt="황금모피 블랙 직조 라벨" class="footer-label-img">
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="footer-col">
+          <h5>Navigation</h5>
+          <ul class="footer-links">
+            <li><a href="#hero">HOME</a></li>
+            <li><a href="#collection">COLLECTION</a></li>
+            <li><a href="#essence">ESSENCE</a></li>
+            <li><a href="#atelier">ATELIER STORY</a></li>
+            <li><a href="#craft">7-STEP CRAFT</a></li>
+            <li><a href="#factory">FACTORY (공장 방문)</a></li>
+          </ul>
+        </div>
+
+        <!-- Official Channels -->
+        <div class="footer-col">
+          <h5>Channels</h5>
+          <ul class="footer-links">
+            <li><a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer">네이버 스마트스토어 ↗</a></li>
+            <li><a href="mailto:goldfur_kr@naver.com">공식 이메일 문의 ✉</a></li>
+            <li><a href="tel:0507-1316-9812">전화 상담 (0507-1316-9812) ☎</a></li>
+            <li><a href="#factory" onclick="openReservationModal()">공장 방문 예약 (사전 예약) 📅</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Legal -->
+        <div class="footer-col footer-contact-info">
+          <h5>Contact & Factory</h5>
+          <p><strong>상호명:</strong> 황금모피 (HWANG GEUM)</p>
+          <p><strong>대표:</strong> 부부 장인 아틀리에</p>
+          <p><strong>공장 직영:</strong> 서울 동대문구 천호대로89길 3 진양빌딩 403호 (사전 예약제)</p>
+          <p><strong>문의 전화:</strong> 0507-1316-9812</p>
+          <p><strong>공식 이메일:</strong> goldfur_kr@naver.com</p>
+          <p><strong>도메인:</strong> hwanggeum.co.kr / goldfur.kr</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 황금모피 (HWANG GEUM). All Rights Reserved. Designed for Timeless Heritage.
+        </div>
+        <div style="display: flex; gap: 20px;">
+          <span>35년 전통의 프리미엄 모피 제조 공장</span>
+          <span>서울 동대문 자체 공장 직영</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =======================================================================
+       Modal: Product Quick View (Magazine Style)
+       ======================================================================= -->
+  <div class="modal-backdrop" id="quickViewModal" onclick="handleBackdropClick(event, 'quickViewModal')">
+    <div class="modal-content-box">
+      <button type="button" class="modal-close-btn" onclick="closeModal('quickViewModal')" aria-label="닫기">✕</button>
+      
+      <div class="quickview-layout">
+        <!-- Gallery -->
+        <div class="quickview-gallery">
+          <div class="quickview-main-image">
+            <img id="modalMainImg" src="" alt="상품 확대 이미지">
+          </div>
+          <div class="quickview-thumbnails" id="modalThumbnails">
+            <!-- Dynamically injected -->
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="quickview-details">
+          <span class="quickview-badge" id="modalBadge">HWANG GEUM SIGNATURE</span>
+          <h3 class="quickview-title" id="modalTitle">상품명</h3>
+          <div class="quickview-price" id="modalPrice">0원</div>
+          
+          <p class="quickview-desc" id="modalDesc">
+            35년 경력의 부부 장인이 직접 선별한 프리미엄 원피를 사용하여 서울 동대문 아틀리에 공장에서 특수 미싱과 꼼꼼한 손바느질 마감으로 완성한 시그니처 아이템입니다.
+          </p>
+
+          <div class="quickview-specs">
+            <div class="spec-line">
+              <span class="label">원피 등급</span>
+              <span class="val">북미/북유럽 최상위 프리미엄 천연 밍크 (Full Pelt)</span>
+            </div>
+            <div class="spec-line">
+              <span class="label">제작 방식</span>
+              <span class="val">35년 장인 특수 미싱 봉제 & 정밀 손바느질 마감</span>
+            </div>
+            <div class="spec-line">
+              <span class="label">제작 공장</span>
+              <span class="val">서울 동대문 자체 공장 직영</span>
+            </div>
+          </div>
+
+          <div class="quickview-actions">
+            <a href="https://smartstore.naver.com/goldfur_kr" target="_blank" rel="noopener noreferrer" class="btn-primary" id="modalStoreBtn">
+              네이버 스마트스토어에서 구매하기 →
+            </a>
+            <button type="button" class="btn-secondary" onclick="closeModal('quickViewModal'); scrollToSection('booking');">
+              동대문 공장 방문 피팅 예약하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       Modal: Factory Reservation Quick Popup
+       ======================================================================= -->
+  <div class="modal-backdrop" id="reservationModal" onclick="handleBackdropClick(event, 'reservationModal')">
+    <div class="modal-content-box" style="max-width: 620px;">
+      <button type="button" class="modal-close-btn" onclick="closeModal('reservationModal')" aria-label="닫기">✕</button>
+      <div style="padding: 40px;">
+        <span class="section-sub">Direct Factory Visit</span>
+        <h3 style="font-family: var(--font-serif); font-size: 24px; margin-bottom: 8px;">공장 방문 피팅 & 맞춤 상담 예약</h3>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">
+          서울 동대문구 천호대로89길 3 진양빌딩 403호 황금모피 제조 공장 방문 예약입니다. (쇼룸이 아닌 실제 공장으로 단독 방문 피팅이 진행됩니다.)
+        </p>
+
+        <form onsubmit="handleModalReservationSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label>성함 *</label>
+              <input type="text" id="mUserName" placeholder="홍길동" required>
+            </div>
+            <div class="form-group">
+              <label>연락처 *</label>
+              <input type="tel" id="mUserPhone" placeholder="010-0000-0000" required>
+            </div>
+          </div>
+          <div class="form-group-row">
+            <div class="form-group">
+              <label>방문 희망 날짜 *</label>
+              <input type="date" id="mBookDate" required>
+            </div>
+            <div class="form-group">
+              <label>방문 희망 시간 *</label>
+              <select id="mBookTime" required>
+                <option value="">선택</option>
+                <option value="11:00">오전 11:00</option>
+                <option value="14:00">오후 02:00</option>
+                <option value="15:30">오후 03:30</option>
+                <option value="17:00">오후 05:00</option>
+                <option value="18:30">오후 06:30</option>
+                <option value="other">기타 시간대</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>관심 카테고리</label>
+            <select id="mInterestedCat">
+              <option value="jacket-coat">통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)</option>
+              <option value="vest-hood">밍크 베스트 & 후드 조끼</option>
+              <option value="muffler">통밍크 머플러 & 스카프</option>
+              <option value="bespoke">체형 1:1 맞춤 제작 상담</option>
+              <option value="reform">기존 소장 모피 리폼 / 수선 견적</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-submit-booking">
+            공장 방문 예약 완료하기
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notice -->
+  <div class="toast-notice" id="toastNotice">
+    <span>✦</span>
+    <span id="toastMsg">예약 신청이 접수되었습니다.</span>
+  </div>
+
+  <!-- Scripts with Cache Buster -->
+  <script src="js/products-data.js?v=20260911_v4"></script>
+  <script src="js/app.js?v=20260911_v4"></script>
+</body>
+</html>
