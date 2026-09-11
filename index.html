@@ -17,19 +17,21 @@
   <link rel="icon" type="image/png" href="assets/images/label-woven-black.png">
 
   <!-- CSS with Cache Buster -->
-  <link rel="stylesheet" href="css/style.css?v=20260911_v8">
+  <link rel="stylesheet" href="css/style.css?v=20260911_v9">
 </head>
 <body>
 
   <!-- =======================================================================
-       Top Announcement Bar
+       Top Announcement Bar (Slim on mobile)
        ======================================================================= -->
   <div class="top-bar">
-    <span>✦ 1990 - 2025 · 35년 부부 장인의 수제 모피 아틀리에</span>
-    <span class="top-bar-divider">|</span>
-    <span>Tailor-made, Put the heart.</span>
-    <span class="top-bar-divider">|</span>
-    <span>공장 직영 방문: 서울 동대문구 천호대로89길 3 진양빌딩 403호 (100% 사전 예약제)</span>
+    <div class="container top-bar-inner">
+      <span>✦ 1990 - 2026 · 35년 부부 장인의 수제 모피 아틀리에</span>
+      <span class="top-bar-divider">|</span>
+      <span>Tailor-made, Put the heart.</span>
+      <span class="top-bar-divider">|</span>
+      <span>공장 직영 방문 (100% 사전 예약제)</span>
+    </div>
   </div>
 
   <!-- =======================================================================
@@ -57,10 +59,10 @@
 
       <!-- Action Buttons -->
       <div class="header-actions">
-        <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer" class="btn-header-store">
+        <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer" class="btn-header-store desktop-only">
           스마트스토어 ↗
         </a>
-        <button type="button" class="btn-header-reserve" onclick="openReservationModal()">
+        <button type="button" class="btn-header-reserve desktop-only" onclick="openReservationModal()">
           공장 방문 예약
         </button>
         <button type="button" class="btn-mobile-toggle" id="mobileMenuBtn" aria-label="메뉴 열기">
@@ -264,6 +266,13 @@
       <!-- Dynamic Products Grid -->
       <div class="products-grid" id="productsGrid">
         <!-- Dynamically injected via JS -->
+      </div>
+
+      <!-- Load More Button -->
+      <div class="collection-load-more-wrap" id="loadMoreWrap">
+        <button type="button" class="btn-load-more" id="btnLoadMore" onclick="loadMoreProducts()">
+          황금모피 컬렉션 더보기 <span id="loadMoreCounter">(8/40)</span> ▾
+        </button>
       </div>
 
       <!-- Collection Bottom Bridge -->
@@ -826,8 +835,24 @@
     <span id="toastMsg">예약 신청이 접수되었습니다.</span>
   </div>
 
+  <!-- Mobile Floating Quick Action Bar -->
+  <aside class="mobile-bottom-bar" aria-label="모바일 빠른 문의 및 예약">
+    <a href="tel:0507-1316-9812" class="mobile-bar-btn call">
+      <span class="btn-icon">📞</span>
+      <span class="btn-text">전화 상담</span>
+    </a>
+    <button type="button" class="mobile-bar-btn reserve" onclick="openReservationModal()">
+      <span class="btn-icon">📅</span>
+      <span class="btn-text">공장 피팅 예약</span>
+    </button>
+    <a href="https://smartstore.naver.com/goldfur_kr/category/d7adb89b9e1742a58cf32afdde4a6591?cp=1" target="_blank" rel="noopener noreferrer" class="mobile-bar-btn store">
+      <span class="btn-icon">🛍️</span>
+      <span class="btn-text">스토어 구매</span>
+    </a>
+  </aside>
+
   <!-- Scripts with Cache Buster -->
-  <script src="js/products-data.js?v=20260911_v7"></script>
-  <script src="js/app.js?v=20260911_v7"></script>
+  <script src="js/products-data.js?v=20260911_v8"></script>
+  <script src="js/app.js?v=20260911_v8"></script>
 </body>
 </html>

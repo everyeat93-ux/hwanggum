@@ -66,9 +66,11 @@ function goToSlide(index) {
 }
 
 /* ==========================================================================
-   Curated Collection & Lookbook
+   Curated Collection & Lookbook (With Mobile Pagination)
    ========================================================================== */
 let activeCategory = 'all';
+let visibleProductCount = 8; // Default 8 items to prevent infinite scrolling
+const PRODUCT_PAGE_SIZE = 8;
 
 function initProducts() {
   const products = window.HWANG_GEUM_PRODUCTS || [];
@@ -82,6 +84,7 @@ function initProducts() {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       activeCategory = tab.dataset.category;
+      visibleProductCount = 8; // Reset count on category change
       renderProducts(products, activeCategory);
     });
   });
@@ -117,6 +120,8 @@ function updateCategoryCounts(products) {
 
 function renderProducts(products, category) {
   const grid = document.getElementById('productsGrid');
+  const loadMoreWrap = document.getElementById('loadMoreWrap');
+  const loadMoreCounter = document.getElementById('loadMoreCounter');
   if (!grid) return;
 
   const filtered = category === 'all' 
@@ -129,10 +134,26 @@ function renderProducts(products, category) {
         해당 카테고리의 상품을 준비 중입니다.
       </div>
     `;
+    if (loadMoreWrap) loadMoreWrap.style.display = 'none';
     return;
   }
 
-  grid.innerHTML = filtered.map(product => {
+  // Display limited subset
+  const displayed = filtered.slice(0, visibleProductCount);
+
+  // Update Load More Button visibility
+  if (loadMoreWrap) {
+    if (visibleProductCount >= filtered.length) {
+      loadMoreWrap.style.display = 'none';
+    } else {
+      loadMoreWrap.style.display = 'flex';
+      if (loadMoreCounter) {
+        loadMoreCounter.textContent = `(${displayed.length}/${filtered.length})`;
+      }
+    }
+  }
+
+  grid.innerHTML = displayed.map(product => {
     const primaryTag = product.tags && product.tags.length > 0 ? product.tags[0] : '';
     const secondaryTag = product.tags && product.tags.length > 1 ? product.tags[1] : '';
 
@@ -164,6 +185,12 @@ function renderProducts(products, category) {
       </article>
     `;
   }).join('');
+}
+
+function loadMoreProducts() {
+  const products = window.HWANG_GEUM_PRODUCTS || [];
+  visibleProductCount += PRODUCT_PAGE_SIZE;
+  renderProducts(products, activeCategory);
 }
 
 /* ==========================================================================
