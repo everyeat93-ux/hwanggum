@@ -533,51 +533,56 @@
           <h4>봄·여름 공장 방문 피팅 & 맞춤 상담 예약</h4>
           <p class="sub">공장은 별도의 쇼룸이 아니며 부재 중일 수 있어, <strong>사전 예약 고객님만</strong> 일정 확정 후 모십니다. (월~금 10:00~18:00)</p>
 
-          <form class="reservation-form" id="bookingForm" onsubmit="handleReservationSubmit(event)">
+          <form class="reservation-form" id="bookingForm" action="https://formsubmit.co/goldfur_kr@naver.com" method="POST" onsubmit="handleReservationSubmit(event)">
+            <!-- FormSubmit Options -->
+            <input type="hidden" name="_subject" value="[황금모피] 새로운 공장 방문 피팅 예약 신청이 접수되었습니다.">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+
             <div class="form-group-row">
               <div class="form-group">
                 <label for="userName">성함 *</label>
-                <input type="text" id="userName" name="userName" placeholder="홍길동" required>
+                <input type="text" id="userName" name="고객성함" placeholder="홍길동" required>
               </div>
               <div class="form-group">
                 <label for="userPhone">연락처 *</label>
-                <input type="tel" id="userPhone" name="userPhone" placeholder="010-0000-0000" required>
+                <input type="tel" id="userPhone" name="연락처" placeholder="010-0000-0000" required>
               </div>
             </div>
 
             <div class="form-group-row">
               <div class="form-group">
                 <label for="bookDate">방문 희망 일자 (월~금) *</label>
-                <input type="date" id="bookDate" name="bookDate" required>
+                <input type="date" id="bookDate" name="방문희망일자" required>
               </div>
               <div class="form-group">
                 <label for="bookTime">방문 희망 시간 (10:00~18:00) *</label>
-                <select id="bookTime" name="bookTime" required>
+                <select id="bookTime" name="방문희망시간" required>
                   <option value="">시간대를 선택해 주세요</option>
-                  <option value="10:00">오전 10:00</option>
-                  <option value="11:30">오전 11:30</option>
-                  <option value="14:00">오후 02:00</option>
-                  <option value="15:30">오후 03:30</option>
-                  <option value="17:00">오후 05:00</option>
-                  <option value="other">기타 시간대 (유선 협의)</option>
+                  <option value="오전 10:00">오전 10:00</option>
+                  <option value="오전 11:30">오전 11:30</option>
+                  <option value="오후 02:00">오후 02:00</option>
+                  <option value="오후 03:30">오후 03:30</option>
+                  <option value="오후 05:00">오후 05:00</option>
+                  <option value="기타 시간대 (유선 협의)">기타 시간대 (유선 협의)</option>
                 </select>
               </div>
             </div>
 
             <div class="form-group">
               <label for="interestedCat">관심 품목 / 방문 목적</label>
-              <select id="interestedCat" name="interestedCat">
-                <option value="jacket-coat">통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)</option>
-                <option value="vest-hood">밍크 베스트 & 후드 조끼 라인</option>
-                <option value="muffler">통밍크 머플러 & 스카프 컬렉션</option>
-                <option value="bespoke">체형 1:1 맞춤 제작 (Bespoke)</option>
-                <option value="reform">기존 소장 모피 리폼 / 수선 상담</option>
+              <select id="interestedCat" name="관심품목_방문목적">
+                <option value="통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)">통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)</option>
+                <option value="밍크 베스트 & 후드 조끼 라인">밍크 베스트 & 후드 조끼 라인</option>
+                <option value="통밍크 머플러 & 스카프 컬렉션">통밍크 머플러 & 스카프 컬렉션</option>
+                <option value="체형 1:1 맞춤 제작 (Bespoke)">체형 1:1 맞춤 제작 (Bespoke)</option>
+                <option value="기존 소장 모피 리폼 / 수선 상담">기존 소장 모피 리폼 / 수선 상담</option>
               </select>
             </div>
 
             <div class="form-group">
               <label for="userMemo">추가 요청 사항 (체형 고민, 원하는 컬러, 희망 기장 등)</label>
-              <textarea id="userMemo" name="userMemo" rows="3" placeholder="예: 평소 66사이즈를 입는데 롱코트 기장감과 소매 길이 상담을 희망합니다."></textarea>
+              <textarea id="userMemo" name="추가요청사항" rows="3" placeholder="예: 평소 66사이즈를 입는데 롱코트 기장감과 소매 길이 상담을 희망합니다."></textarea>
             </div>
 
             <div class="form-checkbox-wrap">
@@ -587,7 +592,7 @@
               </label>
             </div>
 
-            <button type="submit" class="btn-submit-booking">
+            <button type="submit" class="btn-submit-booking" id="btnSubmitBooking">
               공장 방문 예약 신청하기
             </button>
           </form>
@@ -765,46 +770,51 @@
           황금모피는 별도의 쇼룸이 아닌 실제 제조 공장입니다. 제작 일정이나 외부 출장으로 부재중일 수 있으니, <strong>월~금 10:00~18:00 중 100% 사전 예약 고객님만</strong> 방문이 가능합니다.
         </p>
 
-        <form onsubmit="handleModalReservationSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+        <form id="modalBookingForm" action="https://formsubmit.co/goldfur_kr@naver.com" method="POST" onsubmit="handleModalReservationSubmit(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- FormSubmit Options -->
+          <input type="hidden" name="_subject" value="[황금모피] 공장 방문 피팅 예약 신청 (퀵 팝업)">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+
           <div class="form-group-row">
             <div class="form-group">
               <label>성함 *</label>
-              <input type="text" id="mUserName" placeholder="홍길동" required>
+              <input type="text" id="mUserName" name="고객성함" placeholder="홍길동" required>
             </div>
             <div class="form-group">
               <label>연락처 *</label>
-              <input type="tel" id="mUserPhone" placeholder="010-0000-0000" required>
+              <input type="tel" id="mUserPhone" name="연락처" placeholder="010-0000-0000" required>
             </div>
           </div>
           <div class="form-group-row">
             <div class="form-group">
               <label>방문 희망 날짜 (월~금) *</label>
-              <input type="date" id="mBookDate" required>
+              <input type="date" id="mBookDate" name="방문희망일자" required>
             </div>
             <div class="form-group">
               <label>방문 희망 시간 (10:00~18:00) *</label>
-              <select id="mBookTime" required>
+              <select id="mBookTime" name="방문희망시간" required>
                 <option value="">선택</option>
-                <option value="10:00">오전 10:00</option>
-                <option value="11:30">오전 11:30</option>
-                <option value="14:00">오후 02:00</option>
-                <option value="15:30">오후 03:30</option>
-                <option value="17:00">오후 05:00</option>
-                <option value="other">기타 시간대 (협의)</option>
+                <option value="오전 10:00">오전 10:00</option>
+                <option value="오전 11:30">오전 11:30</option>
+                <option value="오후 02:00">오후 02:00</option>
+                <option value="오후 03:30">오후 03:30</option>
+                <option value="오후 05:00">오후 05:00</option>
+                <option value="기타 시간대 (협의)">기타 시간대 (협의)</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <label>관심 카테고리</label>
-            <select id="mInterestedCat">
-              <option value="jacket-coat">통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)</option>
-              <option value="vest-hood">밍크 베스트 & 후드 조끼</option>
-              <option value="muffler">통밍크 머플러 & 스카프</option>
-              <option value="bespoke">체형 1:1 맞춤 제작 상담</option>
-              <option value="reform">기존 소장 모피 리폼 / 수선 견적</option>
+            <select id="mInterestedCat" name="관심품목_방문목적">
+              <option value="통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)">통밍크 자켓 & 코트 (블랙그라마, 스텐카라 등)</option>
+              <option value="밍크 베스트 & 후드 조끼">밍크 베스트 & 후드 조끼</option>
+              <option value="통밍크 머플러 & 스카프">통밍크 머플러 & 스카프</option>
+              <option value="체형 1:1 맞춤 제작 상담">체형 1:1 맞춤 제작 상담</option>
+              <option value="기존 소장 모피 리폼 / 수선 견적">기존 소장 모피 리폼 / 수선 견적</option>
             </select>
           </div>
-          <button type="submit" class="btn-submit-booking">
+          <button type="submit" class="btn-submit-booking" id="btnSubmitModalBooking">
             공장 방문 예약 완료하기
           </button>
         </form>
@@ -819,7 +829,7 @@
   </div>
 
   <!-- Scripts with Cache Buster -->
-  <script src="js/products-data.js?v=20260911_v5"></script>
-  <script src="js/app.js?v=20260911_v5"></script>
+  <script src="js/products-data.js?v=20260911_v6"></script>
+  <script src="js/app.js?v=20260911_v6"></script>
 </body>
 </html>

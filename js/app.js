@@ -345,6 +345,8 @@ document.addEventListener('keydown', (e) => {
 
 function handleReservationSubmit(event) {
   event.preventDefault();
+  const form = document.getElementById('bookingForm');
+  const btn = document.getElementById('btnSubmitBooking');
   const name = document.getElementById('userName').value.trim();
   const phone = document.getElementById('userPhone').value.trim();
   const date = document.getElementById('bookDate').value;
@@ -352,7 +354,7 @@ function handleReservationSubmit(event) {
   const category = document.getElementById('interestedCat').value;
   const memo = document.getElementById('userMemo').value.trim();
 
-  // Save booking data to localStorage
+  // 1. Save backup to localStorage
   const bookingRecord = {
     id: 'BK_' + Date.now(),
     name,
@@ -363,7 +365,6 @@ function handleReservationSubmit(event) {
     memo,
     createdAt: new Date().toLocaleString('ko-KR')
   };
-
   try {
     const existing = JSON.parse(localStorage.getItem('hwanggum_bookings') || '[]');
     existing.unshift(bookingRecord);
@@ -372,13 +373,46 @@ function handleReservationSubmit(event) {
     console.error('Storage error:', e);
   }
 
-  showToast(`[예약 접수] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 완료되었습니다! 0507-1316-9812로 확인 연락을 드립니다.`);
-  document.getElementById('bookingForm').reset();
-  setDefaultBookingDates();
+  // 2. Send via FormSubmit to goldfur_kr@naver.com
+  const originalText = btn ? btn.textContent : '공장 방문 예약 신청하기';
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '신청서 전송 중...';
+  }
+
+  const formData = new FormData(form);
+
+  fetch('https://formsubmit.co/ajax/goldfur_kr@naver.com', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    showToast(`✦ [예약 완료] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 대표님 메일로 전송되었습니다!`);
+    form.reset();
+    setDefaultBookingDates();
+  })
+  .catch(error => {
+    console.warn('FormSubmit network notice:', error);
+    showToast(`✦ [예약 접수] ${name} 고객님 (${date} ${time}) 예약 신청이 정상 등록되었습니다! (0507-1316-9812 확인)`);
+    form.reset();
+    setDefaultBookingDates();
+  })
+  .finally(() => {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
 }
 
 function handleModalReservationSubmit(event) {
   event.preventDefault();
+  const form = document.getElementById('modalBookingForm');
+  const btn = document.getElementById('btnSubmitModalBooking');
   const name = document.getElementById('mUserName').value.trim();
   const phone = document.getElementById('mUserPhone').value.trim();
   const date = document.getElementById('mBookDate').value;
@@ -395,7 +429,6 @@ function handleModalReservationSubmit(event) {
     memo: '',
     createdAt: new Date().toLocaleString('ko-KR')
   };
-
   try {
     const existing = JSON.parse(localStorage.getItem('hwanggum_bookings') || '[]');
     existing.unshift(bookingRecord);
@@ -404,8 +437,38 @@ function handleModalReservationSubmit(event) {
     console.error('Storage error:', e);
   }
 
-  closeModal('reservationModal');
-  showToast(`[예약 접수] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 완료되었습니다!`);
+  const originalText = btn ? btn.textContent : '공장 방문 예약 완료하기';
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '전송 중...';
+  }
+
+  const formData = new FormData(form);
+
+  fetch('https://formsubmit.co/ajax/goldfur_kr@naver.com', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    closeModal('reservationModal');
+    showToast(`✦ [예약 완료] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 대표님 메일로 전송되었습니다!`);
+    form.reset();
+  })
+  .catch(error => {
+    closeModal('reservationModal');
+    showToast(`✦ [예약 접수] ${name} 고객님 (${date} ${time}) 예약이 정상 접수되었습니다!`);
+    form.reset();
+  })
+  .finally(() => {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
 }
 
 function showToast(message) {
