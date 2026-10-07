@@ -66,69 +66,44 @@ function goToSlide(index) {
 }
 
 /* ==========================================================================
-   HWANG GUM HERITAGE LOOKBOOK (Editorial Grid & Filtering)
+   HWANG GUM HERITAGE LOOKBOOK (Pure Visual Editorial Gallery)
    ========================================================================== */
 let activeCategory = 'all';
-let visibleLookCount = 8; // Default 8 items
-const LOOK_PAGE_SIZE = 8;
+let visibleLookCount = 12; // Start with 12 looks
+const LOOK_PAGE_SIZE = 12;
+let currentFilteredLooks = [];
+let currentLightboxIndex = 0;
 
 function initLookbook() {
   const looks = window.HWANG_GEUM_LOOKBOOK || [];
-  updateCategoryCounts(looks);
   renderLookbook(looks, 'all');
 
-  // Tab listeners
-  const tabs = document.querySelectorAll('.collection-tab');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      activeCategory = tab.dataset.category;
-      visibleLookCount = 8; // Reset count on category change
+  // Filter tab listeners
+  const filterBtns = document.querySelectorAll('.lb-filter');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.dataset.category;
+      visibleLookCount = 12; // Reset count on filter change
       renderLookbook(looks, activeCategory);
     });
   });
 }
 
-function updateCategoryCounts(looks) {
-  const counts = {
-    all: looks.length,
-    'jacket-coat': 0,
-    'vest-hood': 0,
-    'muffler-acc': 0
-  };
-
-  looks.forEach(l => {
-    if (counts[l.categoryKey] !== undefined) {
-      counts[l.categoryKey]++;
-    }
-  });
-
-  const countAll = document.getElementById('countAll');
-  const countJacket = document.getElementById('countJacket');
-  const countVest = document.getElementById('countVest');
-  const countMuffler = document.getElementById('countMuffler');
-
-  if (countAll) countAll.textContent = `(${counts.all})`;
-  if (countJacket) countJacket.textContent = `(${counts['jacket-coat']})`;
-  if (countVest) countVest.textContent = `(${counts['vest-hood']})`;
-  if (countMuffler) countMuffler.textContent = `(${counts['muffler-acc']})`;
-}
-
 function renderLookbook(looks, category) {
   const grid = document.getElementById('lookbookGrid');
   const loadMoreWrap = document.getElementById('loadMoreWrap');
-  const loadMoreCounter = document.getElementById('loadMoreCounter');
   if (!grid) return;
 
-  const filtered = category === 'all' 
+  currentFilteredLooks = category === 'all' 
     ? looks 
     : looks.filter(l => l.categoryKey === category);
 
-  if (filtered.length === 0) {
+  if (currentFilteredLooks.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #888;">
-        해당 카테고리의 룩북을 준비 중입니다.
+        준비 중입니다.
       </div>
     `;
     if (loadMoreWrap) loadMoreWrap.style.display = 'none';
@@ -136,39 +111,23 @@ function renderLookbook(looks, category) {
   }
 
   // Display limited subset
-  const displayed = filtered.slice(0, visibleLookCount);
+  const displayed = currentFilteredLooks.slice(0, visibleLookCount);
 
   // Update Load More Button visibility
   if (loadMoreWrap) {
-    if (visibleLookCount >= filtered.length) {
+    if (visibleLookCount >= currentFilteredLooks.length) {
       loadMoreWrap.style.display = 'none';
     } else {
-      loadMoreWrap.style.display = 'flex';
-      if (loadMoreCounter) {
-        loadMoreCounter.textContent = `(${displayed.length}/${filtered.length})`;
-      }
+      loadMoreWrap.style.display = 'block';
     }
   }
 
-  grid.innerHTML = displayed.map(look => {
+  // Pure Visual Lookbook - Zero text or badges on or under images
+  grid.innerHTML = displayed.map((look, index) => {
     return `
-      <article class="lookbook-card" onclick="openLookbookModal('${look.id}')">
-        <div class="lookbook-thumb-wrap">
-          <img src="${look.image}" alt="${escapeHtml(look.titleKo)}" loading="lazy">
-          <div class="lookbook-card-badge">${look.lookNumber}</div>
-          <div class="lookbook-hover-cta">
-            <span class="btn-lookbook-view">VIEW LOOK ↗</span>
-          </div>
-        </div>
-        <div class="lookbook-meta">
-          <span class="lookbook-cat">${escapeHtml(look.categoryLabel)}</span>
-          <h3 class="lookbook-title-ko">${escapeHtml(look.titleKo)}</h3>
-          <p class="lookbook-title-en">${escapeHtml(look.titleEn)}</p>
-          <div class="lookbook-pelt-tag">
-            <span>${escapeHtml(look.peltGrade)}</span>
-          </div>
-        </div>
-      </article>
+      <div class="lookbook-item" onclick="openLightbox(${index})">
+        <img src="${look.image}" alt="HWANG GUM HERITAGE LOOK" loading="lazy">
+      </div>
     `;
   }).join('');
 }
@@ -180,40 +139,71 @@ function loadMoreLooks() {
 }
 
 /* ==========================================================================
-   Lookbook Editorial Modal
+   Fullscreen Editorial Lightbox
    ========================================================================== */
-function openLookbookModal(lookId) {
-  const looks = window.HWANG_GEUM_LOOKBOOK || [];
-  const look = looks.find(l => l.id === lookId);
+function openLightbox(index) {
+  if (!currentFilteredLooks || !currentFilteredLooks[index]) return;
+
+  currentLightboxIndex = index;
+  updateLightboxContent();
+
+  const modal = document.getElementById('lightboxModal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function updateLightboxContent() {
+  const look = currentFilteredLooks[currentLightboxIndex];
   if (!look) return;
 
-  const modal = document.getElementById('lookbookModal');
-  const img = document.getElementById('lbModalImg');
-  const number = document.getElementById('lbModalNumber');
-  const category = document.getElementById('lbModalCategory');
-  const titleKo = document.getElementById('lbModalTitleKo');
-  const titleEn = document.getElementById('lbModalTitleEn');
-  const pelt = document.getElementById('lbModalPelt');
-  const color = document.getElementById('lbModalColor');
-  const desc = document.getElementById('lbModalDesc');
-  const storeBtn = document.getElementById('lbModalStoreBtn');
+  const img = document.getElementById('lightboxImg');
+  const counter = document.getElementById('lightboxCounter');
+  const storeLink = document.getElementById('lightboxStoreLink');
 
   if (img) {
     img.src = look.image;
-    img.alt = look.titleKo;
+    img.alt = look.titleKo || 'HWANG GUM HERITAGE LOOK';
   }
-  if (number) number.textContent = look.lookNumber;
-  if (category) category.textContent = look.categoryLabel;
-  if (titleKo) titleKo.textContent = look.titleKo;
-  if (titleEn) titleEn.textContent = look.titleEn;
-  if (pelt) pelt.textContent = look.peltGrade;
-  if (color) color.textContent = look.color;
-  if (desc) desc.textContent = look.description;
-  if (storeBtn) storeBtn.href = look.storeUrl;
-
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  if (counter) {
+    const cur = String(currentLightboxIndex + 1).padStart(2, '0');
+    const tot = String(currentFilteredLooks.length).padStart(2, '0');
+    counter.textContent = `${cur} / ${tot}`;
+  }
+  if (storeLink && look.storeUrl) {
+    storeLink.href = look.storeUrl;
+  }
 }
+
+function closeLightbox() {
+  const modal = document.getElementById('lightboxModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function prevLightboxImage(e) {
+  if (e) e.stopPropagation();
+  if (!currentFilteredLooks.length) return;
+  currentLightboxIndex = (currentLightboxIndex - 1 + currentFilteredLooks.length) % currentFilteredLooks.length;
+  updateLightboxContent();
+}
+
+function nextLightboxImage(e) {
+  if (e) e.stopPropagation();
+  if (!currentFilteredLooks.length) return;
+  currentLightboxIndex = (currentLightboxIndex + 1) % currentFilteredLooks.length;
+  updateLightboxContent();
+}
+
+function handleLightboxBackdrop(event) {
+  if (event.target.id === 'lightboxModal') {
+    closeLightbox();
+  }
+}
+
 
 /* ==========================================================================
    Craft 7-Step Process Interactive Steps
@@ -336,13 +326,21 @@ function handleBackdropClick(event, modalId) {
   }
 }
 
-// Close with Escape key
+// Keyboard navigation for Lightbox and Modals
 document.addEventListener('keydown', (e) => {
+  const lightbox = document.getElementById('lightboxModal');
+  const isLightboxActive = lightbox && lightbox.classList.contains('active');
+
   if (e.key === 'Escape') {
-    closeModal('lookbookModal');
+    closeLightbox();
     closeModal('reservationModal');
+  } else if (isLightboxActive && e.key === 'ArrowLeft') {
+    prevLightboxImage();
+  } else if (isLightboxActive && e.key === 'ArrowRight') {
+    nextLightboxImage();
   }
 });
+
 
 function handleReservationSubmit(event) {
   event.preventDefault();
