@@ -6,7 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initHeroSlider();
-  initProducts();
+  initLookbook();
   initCraftSteps();
   initMobileNav();
   setDefaultBookingDates();
@@ -66,16 +66,16 @@ function goToSlide(index) {
 }
 
 /* ==========================================================================
-   Curated Collection & Lookbook (With Mobile Pagination)
+   HWANG GUM HERITAGE LOOKBOOK (Editorial Grid & Filtering)
    ========================================================================== */
 let activeCategory = 'all';
-let visibleProductCount = 8; // Default 8 items to prevent infinite scrolling
-const PRODUCT_PAGE_SIZE = 8;
+let visibleLookCount = 8; // Default 8 items
+const LOOK_PAGE_SIZE = 8;
 
-function initProducts() {
-  const products = window.HWANG_GEUM_PRODUCTS || [];
-  updateCategoryCounts(products);
-  renderProducts(products, 'all');
+function initLookbook() {
+  const looks = window.HWANG_GEUM_LOOKBOOK || [];
+  updateCategoryCounts(looks);
+  renderLookbook(looks, 'all');
 
   // Tab listeners
   const tabs = document.querySelectorAll('.collection-tab');
@@ -84,24 +84,23 @@ function initProducts() {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       activeCategory = tab.dataset.category;
-      visibleProductCount = 8; // Reset count on category change
-      renderProducts(products, activeCategory);
+      visibleLookCount = 8; // Reset count on category change
+      renderLookbook(looks, activeCategory);
     });
   });
 }
 
-function updateCategoryCounts(products) {
+function updateCategoryCounts(looks) {
   const counts = {
-    all: products.length,
+    all: looks.length,
     'jacket-coat': 0,
     'vest-hood': 0,
-    'muffler-scarf': 0,
-    'acc-hat': 0
+    'muffler-acc': 0
   };
 
-  products.forEach(p => {
-    if (counts[p.categoryKey] !== undefined) {
-      counts[p.categoryKey]++;
+  looks.forEach(l => {
+    if (counts[l.categoryKey] !== undefined) {
+      counts[l.categoryKey]++;
     }
   });
 
@@ -109,29 +108,27 @@ function updateCategoryCounts(products) {
   const countJacket = document.getElementById('countJacket');
   const countVest = document.getElementById('countVest');
   const countMuffler = document.getElementById('countMuffler');
-  const countAcc = document.getElementById('countAcc');
 
   if (countAll) countAll.textContent = `(${counts.all})`;
   if (countJacket) countJacket.textContent = `(${counts['jacket-coat']})`;
   if (countVest) countVest.textContent = `(${counts['vest-hood']})`;
-  if (countMuffler) countMuffler.textContent = `(${counts['muffler-scarf']})`;
-  if (countAcc) countAcc.textContent = `(${counts['acc-hat']})`;
+  if (countMuffler) countMuffler.textContent = `(${counts['muffler-acc']})`;
 }
 
-function renderProducts(products, category) {
-  const grid = document.getElementById('productsGrid');
+function renderLookbook(looks, category) {
+  const grid = document.getElementById('lookbookGrid');
   const loadMoreWrap = document.getElementById('loadMoreWrap');
   const loadMoreCounter = document.getElementById('loadMoreCounter');
   if (!grid) return;
 
   const filtered = category === 'all' 
-    ? products 
-    : products.filter(p => p.categoryKey === category);
+    ? looks 
+    : looks.filter(l => l.categoryKey === category);
 
   if (filtered.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #888;">
-        해당 카테고리의 상품을 준비 중입니다.
+        해당 카테고리의 룩북을 준비 중입니다.
       </div>
     `;
     if (loadMoreWrap) loadMoreWrap.style.display = 'none';
@@ -139,11 +136,11 @@ function renderProducts(products, category) {
   }
 
   // Display limited subset
-  const displayed = filtered.slice(0, visibleProductCount);
+  const displayed = filtered.slice(0, visibleLookCount);
 
   // Update Load More Button visibility
   if (loadMoreWrap) {
-    if (visibleProductCount >= filtered.length) {
+    if (visibleLookCount >= filtered.length) {
       loadMoreWrap.style.display = 'none';
     } else {
       loadMoreWrap.style.display = 'flex';
@@ -153,33 +150,22 @@ function renderProducts(products, category) {
     }
   }
 
-  grid.innerHTML = displayed.map(product => {
-    const primaryTag = product.tags && product.tags.length > 0 ? product.tags[0] : '';
-    const secondaryTag = product.tags && product.tags.length > 1 ? product.tags[1] : '';
-
+  grid.innerHTML = displayed.map(look => {
     return `
-      <article class="product-card">
-        <div class="product-thumb-box" onclick="openQuickView('${product.id}')">
-          <img src="${product.image}" alt="${escapeHtml(product.title)}" loading="lazy">
-          ${primaryTag ? `
-          <div class="product-tag-badges">
-            <span class="tag-badge gold">${escapeHtml(primaryTag)}</span>
-            ${secondaryTag ? `<span class="tag-badge">${escapeHtml(secondaryTag)}</span>` : ''}
-          </div>` : ''}
-          <div class="product-quickview-overlay">
-            <button type="button" class="btn-quickview">Quick View · 상세 룩북</button>
+      <article class="lookbook-card" onclick="openLookbookModal('${look.id}')">
+        <div class="lookbook-thumb-wrap">
+          <img src="${look.image}" alt="${escapeHtml(look.titleKo)}" loading="lazy">
+          <div class="lookbook-card-badge">${look.lookNumber}</div>
+          <div class="lookbook-hover-cta">
+            <span class="btn-lookbook-view">VIEW LOOK ↗</span>
           </div>
         </div>
-        <div class="product-info">
-          <span class="product-cat">${escapeHtml(product.categoryLabel)}</span>
-          <h3 class="product-title" title="${escapeHtml(product.title)}" onclick="openQuickView('${product.id}')" style="cursor: pointer;">
-            ${escapeHtml(product.title)}
-          </h3>
-          <div class="product-price-row">
-            <span class="product-price">${product.formattedPrice}</span>
-            <a href="${product.storeUrl}" target="_blank" rel="noopener noreferrer" class="product-btn-store" title="네이버 스마트스토어로 이동">
-              스토어 구매 ↗
-            </a>
+        <div class="lookbook-meta">
+          <span class="lookbook-cat">${escapeHtml(look.categoryLabel)}</span>
+          <h3 class="lookbook-title-ko">${escapeHtml(look.titleKo)}</h3>
+          <p class="lookbook-title-en">${escapeHtml(look.titleEn)}</p>
+          <div class="lookbook-pelt-tag">
+            <span>${escapeHtml(look.peltGrade)}</span>
           </div>
         </div>
       </article>
@@ -187,58 +173,46 @@ function renderProducts(products, category) {
   }).join('');
 }
 
-function loadMoreProducts() {
-  const products = window.HWANG_GEUM_PRODUCTS || [];
-  visibleProductCount += PRODUCT_PAGE_SIZE;
-  renderProducts(products, activeCategory);
+function loadMoreLooks() {
+  const looks = window.HWANG_GEUM_LOOKBOOK || [];
+  visibleLookCount += LOOK_PAGE_SIZE;
+  renderLookbook(looks, activeCategory);
 }
 
 /* ==========================================================================
-   Quick View Modal
+   Lookbook Editorial Modal
    ========================================================================== */
-function openQuickView(productId) {
-  const products = window.HWANG_GEUM_PRODUCTS || [];
-  const product = products.find(p => String(p.id) === String(productId));
-  if (!product) return;
+function openLookbookModal(lookId) {
+  const looks = window.HWANG_GEUM_LOOKBOOK || [];
+  const look = looks.find(l => l.id === lookId);
+  if (!look) return;
 
-  const modal = document.getElementById('quickViewModal');
-  const mainImg = document.getElementById('modalMainImg');
-  const thumbsContainer = document.getElementById('modalThumbnails');
-  const title = document.getElementById('modalTitle');
-  const price = document.getElementById('modalPrice');
-  const badge = document.getElementById('modalBadge');
-  const desc = document.getElementById('modalDesc');
-  const storeBtn = document.getElementById('modalStoreBtn');
+  const modal = document.getElementById('lookbookModal');
+  const img = document.getElementById('lbModalImg');
+  const number = document.getElementById('lbModalNumber');
+  const category = document.getElementById('lbModalCategory');
+  const titleKo = document.getElementById('lbModalTitleKo');
+  const titleEn = document.getElementById('lbModalTitleEn');
+  const pelt = document.getElementById('lbModalPelt');
+  const color = document.getElementById('lbModalColor');
+  const desc = document.getElementById('lbModalDesc');
+  const storeBtn = document.getElementById('lbModalStoreBtn');
 
-  title.textContent = product.title;
-  price.textContent = product.formattedPrice;
-  badge.textContent = `HWANG GEUM · ${product.categoryLabel.toUpperCase()}`;
-  desc.textContent = product.description;
-  storeBtn.href = product.storeUrl;
-
-  // Set main image
-  mainImg.src = product.image;
-  mainImg.alt = product.title;
-
-  // Setup thumbnails
-  const allImages = [product.image, ...(product.detailImages || [])].filter((v, i, a) => a.indexOf(v) === i);
-  thumbsContainer.innerHTML = allImages.map((imgUrl, idx) => `
-    <div class="quickview-thumb ${idx === 0 ? 'active' : ''}" onclick="switchModalImage(this, '${imgUrl}')">
-      <img src="${imgUrl}" alt="썸네일 ${idx + 1}">
-    </div>
-  `).join('');
+  if (img) {
+    img.src = look.image;
+    img.alt = look.titleKo;
+  }
+  if (number) number.textContent = look.lookNumber;
+  if (category) category.textContent = look.categoryLabel;
+  if (titleKo) titleKo.textContent = look.titleKo;
+  if (titleEn) titleEn.textContent = look.titleEn;
+  if (pelt) pelt.textContent = look.peltGrade;
+  if (color) color.textContent = look.color;
+  if (desc) desc.textContent = look.description;
+  if (storeBtn) storeBtn.href = look.storeUrl;
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
-}
-
-function switchModalImage(thumbEl, imgUrl) {
-  const mainImg = document.getElementById('modalMainImg');
-  if (mainImg) mainImg.src = imgUrl;
-
-  const thumbs = document.querySelectorAll('.quickview-thumb');
-  thumbs.forEach(t => t.classList.remove('active'));
-  thumbEl.classList.add('active');
 }
 
 /* ==========================================================================
@@ -248,47 +222,47 @@ const CRAFT_STEPS = {
   1: {
     indicator: "STEP 01 / SELECTION",
     title: "선별 (Selection) - 최상위 원피 감별",
-    desc: "35년 노하우를 바탕으로 북미(Blackglama) 및 북유럽(SAGA) 경매에서 엄선한 지속가능하고 윤리적인 최상위 프리미엄 원피만을 선별합니다. 장모의 길이, 단모의 빽빽한 밀도, 색상의 균일성을 손끝의 감각으로 전수 분류합니다.",
+    desc: "35년 노하우를 바탕으로 북미(Blackglama) 및 북유럽(SAGA) 경매에서 엄선한 최상위 프리미엄 원피만을 선별합니다. 장모의 길이, 단모의 빽빽한 밀도, 색상의 균일성을 손끝의 감각으로 전수 분류합니다.",
     pointTitle: "황금모피의 선별 원칙",
-    pointDesc: "새치나 모질 불량이 섞이지 않도록 자연광 아래에서 원피 한 장 한 장을 분리하여 동일한 컬러 톤과 밀도를 지닌 원피만을 하나의 옷에 배합합니다.",
+    pointDesc: "새치나 모질 불량이 섞이지 않도록 자연광 아래에서 원피 한 장 한 장을 분리하여 동일한 컬러 톤과 밀도를 지닌 원피만을 한 벌의 옷에 배합합니다.",
     img: "assets/images/craft-pelt-selection.jpg"
   },
   2: {
     indicator: "STEP 02 / SKIN STRETCHING",
     title: "스킨 판장 & 손질 (Stretching) - 균일한 텐션 수평화",
-    desc: "가죽 본연의 질감을 살리며 최적의 수평을 잡는 판장 및 손질 작업입니다. 압축과 결 펴기 기법을 통해 원피 가죽의 결을 일정하게 펴고, 옷을 입었을 때 뒤틀림이나 울림 현상이 발생하지 않도록 기초 골격을 세웁니다.",
+    desc: "가죽 본연의 질감을 살리며 최적의 수평을 잡는 판장 작업입니다. 압축과 결 펴기 기법을 통해 원피 가죽의 결을 일정하게 펴고, 옷을 입었을 때 뒤틀림이나 울림 현상이 발생하지 않도록 기초 골격을 세웁니다.",
     pointTitle: "가벼움과 텐션의 균형",
-    pointDesc: "무리하게 가죽을 늘리지 않고 털의 뿌리(모근)를 안전하게 보호하는 황금모피만의 텐션 조절로 깃털처럼 가볍고 튼튼한 내구성을 완성합니다.",
+    pointDesc: "무리하게 가죽을 늘리지 않고 모근을 안전하게 보호하는 황금모피만의 텐션 조절로 깃털처럼 가볍고 튼튼한 내구성을 완성합니다.",
     img: "assets/images/craft-pelt-trimming.png"
   },
   3: {
     indicator: "STEP 03 / PATTERN CUTTING",
     title: "1차 성형 (Pattern Cutting) - 모질과 결을 계산한 재단",
-    desc: "모피는 일반 원단과 달리 털의 방향(결)과 빛 반사각이 매우 중요합니다. 인체공학적 곡선에 따라 모피 결의 흐름을 계산하고, 특수 모피 칼을 사용하여 털은 자르지 않고 오직 가죽 베이스만을 정밀 V자 절개합니다.",
+    desc: "모피는 털의 방향(결)과 빛 반사각이 핵심입니다. 인체공학적 곡선에 따라 모피 결의 흐름을 계산하고, 특수 모피 칼로 가죽 베이스만을 정밀 V자 절개합니다.",
     pointTitle: "털 손상 없는 무결점 V자 재단",
-    pointDesc: "가죽 뒷면에서 0.5mm 단위로 절개하여 털의 손상을 제로화하고, 이어 붙였을 때 털이 자연스럽게 겹치도록 설계합니다.",
+    pointDesc: "가죽 뒷면에서 0.5mm 단위로 절개하여 털의 손상을 제로화하고 이어 붙였을 때 털이 자연스럽게 겹치도록 설계합니다.",
     img: "assets/images/craft-stretching-tools.jpg"
   },
   4: {
     indicator: "STEP 04 / FUR SEWING",
     title: "특수 미싱 (Fur Sewing) - 털 씹힘 없는 봉제",
-    desc: "모피 전용 특수 미싱기를 사용하여 장인이 손으로 털을 빗어가며 가죽의 단면만을 연결합니다. 털이 재봉선 안으로 씹혀 들어가지 않아 겉에서 보았을 때 재봉선이 눈에 전혀 띄지 않고 만져지지 않는 ‘이음새 은폐’를 실현합니다.",
+    desc: "모피 전용 특수 미싱기를 사용하여 장인이 손으로 털을 빗어가며 가죽의 단면만을 연결합니다. 털이 재봉선 안으로 씹혀 들어가지 않아 재봉선이 손끝에 전혀 만져지지 않습니다.",
     pointTitle: "장인의 손끝 감각",
     pointDesc: "바늘 한 땀이 지나갈 때마다 송곳으로 털을 정교하게 빼내어 털의 연속성을 완벽하게 유지시킵니다.",
     img: "assets/images/craft-sewing-machine-1.png"
   },
   5: {
     indicator: "STEP 05 / ASSEMBLY",
-    title: "2차 성형 & 손바느질 수봉 (Assembly & Hand Stitch)",
-    desc: "봉제된 각 파트를 입체 조립한 후, 옷의 뒤틀림을 방지하고 입체감을 살리는 정밀 손바느질 수봉 작업을 진행합니다.",
+    title: "2차 성형 & 조립 (Assembly & Shaping)",
+    desc: "봉제된 각 파트를 입체 조립한 후, 옷의 뒤틀림을 방지하고 입체감을 살리는 정밀 성형 작업을 진행합니다.",
     pointTitle: "한국인 여성 체형 맞춤 핏",
-    pointDesc: "35년간 축적된 패턴 데이터를 기반으로 암홀 둘레와 등판의 여유분을 최적화하여 둔해 보이지 않고 슬림한 실루엣을 구현합니다.",
+    pointDesc: "35년간 축적된 패턴 데이터를 기반으로 암홀 둘레와 등판의 여유분을 최적화하여 슬림하고 편안한 실루엣을 구현합니다.",
     img: "assets/images/craft-hand-sewing-1.png"
   },
   6: {
     indicator: "STEP 06 / FINISHING",
-    title: "시침 및 안감 완성 (Finishing) - 100% 손바느질 라이닝",
-    desc: "보이지 않는 안감 라이닝, 속주머니, 모피 전용 케스카(모피 여밈 단추) 부착까지 기계를 쓰지 않고 부부 장인이 손바느질(새들 스티치)로 한 땀 한 땀 마감합니다.",
+    title: "시침 수봉 및 안감 완성 (Hand Stitching & Lining)",
+    desc: "보이지 않는 안감 라이닝, 속주머니, 모피 전용 케스카 부착까지 기계를 쓰지 않고 부부 장인이 정밀 손바느질(새들 스티치)로 한 땀 한 땀 마감합니다.",
     pointTitle: "황금모피 블랙 직조 라벨 부착",
     pointDesc: "완성된 의류 안쪽에 HWANG GEUM since 1990 블랙 직조 라벨을 수작업으로 단단히 꿰매어 부부 장인의 이름을 건 품질을 보증합니다.",
     img: "assets/images/craft-basting-finishing.png"
@@ -296,9 +270,9 @@ const CRAFT_STEPS = {
   7: {
     indicator: "STEP 07 / FINAL INSPECTION",
     title: "전수 검수 & 출고 완료 (Final Inspection & Completion)",
-    desc: "공정 완료 후 잔여 털 제거와 중심선 배열, 대칭도, 모질 유지성, 최종 피팅 라인을 부부 장인이 직접 꼼꼼히 검수하여 완벽한 상태로 고객님께 출고합니다.",
+    desc: "공정 완료 후 잔여 털 제거와 중심선 배열, 좌우 대칭도, 모질 유지성을 부부 장인이 직접 꼼꼼히 검수하여 완벽한 상태로 출고합니다.",
     pointTitle: "35년 신뢰의 무결점 출고",
-    pointDesc: "단 1%의 불량이나 결함도 용납하지 않는 전수 검수를 거쳐 평생 대를 이어 입을 수 있는 옷만 완성됩니다.",
+    pointDesc: "단 1%의 결함도 용납하지 않는 전수 검수를 거쳐 평생 대를 이어 물려줄 수 있는 옷만 완성됩니다.",
     img: "assets/images/craft-product-finished.png"
   }
 };
@@ -365,7 +339,7 @@ function handleBackdropClick(event, modalId) {
 // Close with Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    closeModal('quickViewModal');
+    closeModal('lookbookModal');
     closeModal('reservationModal');
   }
 });
@@ -418,12 +392,12 @@ function handleReservationSubmit(event) {
   })
   .then(response => response.json())
   .then(data => {
-    showToast(`✦ [예약 완료] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 대표님 메일로 전송되었습니다!`);
+    showToast(`✦ [예약 완료] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 정상 접수되었습니다!`);
     form.reset();
     setDefaultBookingDates();
   })
   .catch(error => {
-    console.warn('FormSubmit network notice:', error);
+    console.warn('FormSubmit notice:', error);
     showToast(`✦ [예약 접수] ${name} 고객님 (${date} ${time}) 예약 신청이 정상 등록되었습니다! (0507-1316-9812 확인)`);
     form.reset();
     setDefaultBookingDates();
@@ -482,7 +456,7 @@ function handleModalReservationSubmit(event) {
   .then(response => response.json())
   .then(data => {
     closeModal('reservationModal');
-    showToast(`✦ [예약 완료] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 대표님 메일로 전송되었습니다!`);
+    showToast(`✦ [예약 완료] ${name} 고객님 (${date} ${time}) 공장 방문 신청이 정상 접수되었습니다!`);
     form.reset();
   })
   .catch(error => {
